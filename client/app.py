@@ -1,4 +1,11 @@
 import streamlit as st
+from dotenv import load_dotenv # dotenv for Gemini API key
+import os 
+from google import genai
+
+load_dotenv() # Load environment variables from .env file
+key = os.getenv("GEMINI_API_KEY") # Get the Gemini API key
+client = genai.Client(api_key=key) # Create a GenAI client
 
 # Apply Custom CSS for Styling
 st.markdown(
@@ -37,7 +44,7 @@ st.title("🔗 GitHub Repository Chatbot")
 st.write("```Enter a public GitHub repository link to analyze its code.```")
 
 # Hidden GitHub repo link input (white bar removed)
-github_link = st.text_input("GitHub Repository Link", "").strip()
+github_link = st.text_input("Paste your GitHub Repository Link", "").strip() # do API call for GH below 
 
 # Store conversation in session state
 if "messages" not in st.session_state:
@@ -45,21 +52,25 @@ if "messages" not in st.session_state:
 
 # Chat Input Box
 if prompt := st.chat_input("What is up?"):
-    # Store user message
-    st.session_state.messages.append({"role": "user", "content": prompt})
+    st.session_state.messages.append({"role": "user", "user-message": prompt})
 
-    # Generate a fake response (replace with OpenAI API if needed)
-    response = f"Echo: {prompt}"
-    st.session_state.messages.append({"role": "assistant", "content": response})
+    response = client.models.generate_content(
+        model="gemini-1.5-flash", contents=prompt
+    )
+
+    # Store user message and corresponding response 
+    st.session_state.messages.append({"role": "assistant", "response": response.text})
+    
 
 # Conversation Log Container
 st.markdown('<div class="chat-container">', unsafe_allow_html=True)
 
 # Display stored messages
 for message in st.session_state.messages:
-    role_class = "user-message" if message["role"] == "user" else "assistant-message"
+    role_class = "user-message" if message["role"] == "user" else "response"
+    message_content = message.get("user-message") or message.get("response")
     st.markdown(
-        f'<div class="{role_class}">{message["content"]}</div>',
+        f'<div class="{role_class}">{message_content}</div>',
         unsafe_allow_html=True
     )
 
