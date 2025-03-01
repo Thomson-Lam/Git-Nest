@@ -1,1 +1,7 @@
+client/venv/
+backend/venv/
 venv/
+
+# ignore the .env files
+client/.env
+backend/.env
