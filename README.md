@@ -3,4 +3,7 @@
 
 # Set up 
 1. set up a `venv` using `python -m venv venv` 
-2. install packages 
+2. clone repository
+3. pip install -r requirements.txt
+4. cd to client
+5. streamlit run app.py
