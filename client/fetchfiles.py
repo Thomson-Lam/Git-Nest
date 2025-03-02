@@ -64,7 +64,3 @@ def fetch_all_repo_files(url, json_filename="github_file_contents.json"):
         json.dump(existing_data, json_file, indent=4)
 
     print(f"Repository file contents updated in {json_filename}")
-
-# Example usage
-repo_url = input("Enter a GitHub repository URL: ")
-fetch_all_repo_files(repo_url)
