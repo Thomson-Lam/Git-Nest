@@ -4,7 +4,7 @@ import re
 import os
 
 def fetch_all_repo_files(url, json_filename="github_file_contents.json"):
-    # Extract owner and repo name from the URL
+    # Extract owner (username) and repo name from the URL
     match = re.search(r"github\.com/([^/]+)/([^/]+)", url)
     if not match:
         print("Invalid GitHub repository URL.")
@@ -53,9 +53,13 @@ def fetch_all_repo_files(url, json_filename="github_file_contents.json"):
     # Fetch all files recursively
     repo_files = get_files(base_api_url)
     
-    # Update JSON file with the repository files
-    existing_data[repo] = repo_files
+    # Update JSON file: Store under username -> repo -> files
+    if owner not in existing_data:
+        existing_data[owner] = {}  # Create a new dictionary for the user if not present
 
+    existing_data[owner][repo] = repo_files  # Store repo data under username
+
+    # Save updated data back to JSON
     with open(json_filename, "w") as json_file:
         json.dump(existing_data, json_file, indent=4)
 
