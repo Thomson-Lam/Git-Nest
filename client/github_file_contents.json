@@ -3,7 +3,7 @@
         "test": {
             "README.md": "# test\ntesting REST API\n",
             "folder1/anothertest.py": "print(\"hellow world\")",
-            "test.py": "print(\"no\")"
+            "test.py": "print(\"Thank you but\")"
         }
     }
 }

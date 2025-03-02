@@ -79,8 +79,8 @@ def update_github_file(repo_url, file_path, new_content):
         print(f"Failed to update the file. Status Code: {update_response.status_code}")
 
 # Example usage
-repo_url = input("Enter the GitHub repository URL: ")
-file_path = input("Enter the path to the file (e.g., folder1/anothertest.py): ")
-new_content = input("Enter the new content for the file: ")
+# repo_url = input("Enter the GitHub repository URL: ")
+# file_path = input("Enter the path to the file (e.g., folder1/anothertest.py): ")
+# new_content = input("Enter the new content for the file: ")
 
-update_github_file(repo_url, file_path, new_content)
+# update_github_file(repo_url, file_path, new_content)
